@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     private NavMeshAgent navAgent;
     public Animator anim;
 
+    public float targetDistance;
+
     private Vector3 movePoint;
 
     public enum PlayerState
@@ -52,9 +54,15 @@ public class Player : MonoBehaviour
                 {
                     movePoint = hit.point;
                 }
-
+                targetDistance = Vector3.Distance(movePoint, transform.position);
+                if(targetDistance <= 0.1f)
+                {
+                    AnimOn(0);
+                    playerState = PlayerState.Idle;
+                }
+                
                 navAgent.SetDestination(movePoint);
-                //playerState = PlayerState.Idle;
+
                 break;
             case PlayerState.Attack:
                 break;
