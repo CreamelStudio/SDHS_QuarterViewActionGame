@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     public float targetDistance;
 
-    private Vector3 movePoint;
+    [SerializeField]private Transform movePoint;
 
     public enum PlayerState
     {
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButton(0))
                 {
                     AnimOn(PlayerState.Move);
-                    movePoint = hit.point;
+                    movePoint.position = hit.point;
                     playerState = PlayerState.Move;
                 }
 
@@ -52,16 +52,16 @@ public class Player : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButton(0))
                 {
-                    movePoint = hit.point;
+                    movePoint.position = hit.point;
                 }
-                targetDistance = Vector3.Distance(movePoint, transform.position);
+                targetDistance = Vector3.Distance(movePoint.position, transform.position);
                 if(targetDistance <= 0.1f)
                 {
                     AnimOn(0);
                     playerState = PlayerState.Idle;
                 }
                 
-                navAgent.SetDestination(movePoint);
+                navAgent.SetDestination(movePoint.position);
 
                 break;
             case PlayerState.Attack:
