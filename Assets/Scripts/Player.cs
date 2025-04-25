@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
                 {
                     AnimOn(PlayerState.Move);
                     movePoint.position = hit.point;
+                    movePoint.gameObject.SetActive(true);
                     playerState = PlayerState.Move;
                 }
 
@@ -53,12 +54,14 @@ public class Player : MonoBehaviour
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButton(0))
                 {
                     movePoint.position = hit.point;
+                    movePoint.gameObject.SetActive(true);
                 }
                 targetDistance = Vector3.Distance(movePoint.position, transform.position);
                 if(targetDistance <= 0.1f)
                 {
                     AnimOn(0);
                     playerState = PlayerState.Idle;
+                    movePoint.gameObject.SetActive(false);
                 }
                 
                 navAgent.SetDestination(movePoint.position);
