@@ -1,5 +1,8 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.AI;
+using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     public enum EnemyState
@@ -8,11 +11,22 @@ public class Enemy : MonoBehaviour
     }
     public EnemyState state = EnemyState.Idle;
     public float searchRange;
+    public float attackRange;
+    public NavMeshAgent agent;
+    public Animator anim;
 
     //씬 뷰에 기즈모를 그리는 함수
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, searchRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    private void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -22,6 +36,7 @@ public class Enemy : MonoBehaviour
 
     void EnemyAct()
     {
+        AnimInit();
         switch (state)
         {
             case EnemyState.Idle:
@@ -31,16 +46,19 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case EnemyState.Move:
+                agent.SetDestination(GameManager.instance.playerTrans.position);
+                
+                if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= attackRange)
+                {
+                    state = EnemyState.Attack;
+                }
                 break;
         }
     }
 
     //에니메이션 실행
-    void AnimOn(int n)
+    void AnimInit()
     {
-        switch (n)
-        {
-            
-        }
+        anim.SetInteger("EnemyState", (int)state);
     }
 }

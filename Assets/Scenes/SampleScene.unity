@@ -28386,6 +28386,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8468617057500289297, guid: d66c23583a584ef4195dbea312c0b2a7, type: 3}
   m_PrefabInstance: {fileID: 1815714832}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1815714834 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2550935751187727211, guid: d66c23583a584ef4195dbea312c0b2a7, type: 3}
+  m_PrefabInstance: {fileID: 1815714832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1819657206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33299,6 +33304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   searchRange: 7.18
+  attackRange: 2
+  agent: {fileID: 0}
+  anim: {fileID: 1815714834}
 --- !u!195 &2138100739
 NavMeshAgent:
   m_ObjectHideFlags: 0
