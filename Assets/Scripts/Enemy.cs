@@ -12,6 +12,14 @@ public class Enemy : MonoBehaviour
     public EnemyState state = EnemyState.Idle;
     public float searchRange;
     public float attackRange;
+
+    public enum AttackState
+    {
+        None, Attack, Delay
+    }
+    public AttackState attackState = AttackState.None;
+    public AnimationClip attackClip;
+
     public NavMeshAgent agent;
     public Animator anim;
 
@@ -36,24 +44,34 @@ public class Enemy : MonoBehaviour
 
     void EnemyAct()
     {
-        AnimInit();
         switch (state)
         {
             case EnemyState.Idle:
                 if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= searchRange)
                 {
-                    state = EnemyState.Move;
+                    ChangeState(EnemyState.Move);
                 }
                 break;
             case EnemyState.Move:
-                agent.SetDestination(GameManager.instance.playerTrans.position);
-                
-                if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= attackRange)
+                if(GameManager.instance.playerTrans != null)
                 {
-                    state = EnemyState.Attack;
+                    agent.SetDestination(GameManager.instance.playerTrans.position);
+
+                    if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= attackRange)
+                    {
+                        agent.isStopped = true;
+                        ChangeState(EnemyState.Attack);
+                    }
                 }
+                
                 break;
         }
+    }
+
+    void ChangeState(EnemyState state)
+    {
+        this.state = state;
+        AnimInit();
     }
 
     //에니메이션 실행
