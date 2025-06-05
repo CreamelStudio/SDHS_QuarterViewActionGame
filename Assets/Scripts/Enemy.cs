@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
     public AttackState attackState = AttackState.None;
     public AnimationClip attackClip;
 
+    public float delayTime;
+    public float attackTime;
+
     public NavMeshAgent agent;
     public Animator anim;
 
@@ -63,7 +66,46 @@ public class Enemy : MonoBehaviour
                         ChangeState(EnemyState.Attack);
                     }
                 }
+                break;
+            case EnemyState.Attack:
+                float dist = Vector3.Distance(transform.position, GameManager.instance.playerTrans.position);
+                if(dist > attackRange)
+                {
+                    agent.isStopped = false;
+                    attackTime = 0;
+                    delayTime = 0;
+                    attackState = AttackState.None;
+                    ChangeState(EnemyState.Move);
+                }
                 
+                break;
+        }
+
+        switch (attackState)
+        {
+
+            case AttackState.Attack:
+                delayTime += Time.deltaTime;
+                if (delayTime >= (attackClip.length * 0.4f))
+                {
+                    delayTime = 0;
+                    attackTime = 0;
+                    attackState = AttackState.Delay;
+                    AnimSet(0);
+                    attackState = AttackState.Delay;
+
+                }
+                break;
+
+            case AttackState.Delay:
+                delayTime += Time.deltaTime;
+                if(delayTime >= (attackClip.length * 0.6f) * 2.0f)
+                {
+                    delayTime = 0;
+                    attackTime = 0;
+                    AnimSet(0);
+                    attackState = AttackState.Attack;
+                }
                 break;
         }
     }
@@ -72,6 +114,11 @@ public class Enemy : MonoBehaviour
     {
         this.state = state;
         AnimInit();
+    }
+
+    void AnimSet(int stateInt)
+    {
+        anim.SetInteger("EnemyState", stateInt);
     }
 
     //에니메이션 실행
