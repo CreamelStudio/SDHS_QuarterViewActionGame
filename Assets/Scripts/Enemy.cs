@@ -78,10 +78,7 @@ public class Enemy : MonoBehaviour
                     ChangeState(EnemyState.Move);
                 }
                 
-                break;
-        }
-
-        switch (attackState)
+	switch (attackState)
         {
 
             case AttackState.Attack:
@@ -108,6 +105,12 @@ public class Enemy : MonoBehaviour
                 }
                 break;
         }
+
+
+                break;
+        }
+
+        
     }
 
     void ChangeState(EnemyState state)
