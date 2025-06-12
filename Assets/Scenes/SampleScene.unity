@@ -10246,9 +10246,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1254442324}
-  targetDistance: 0
   movePoint: {fileID: 1437620995}
   playerState: 0
+  attackRange: 0
+  attackDist: 0
+  target: {fileID: 0}
 --- !u!195 &672942740
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -33285,7 +33287,7 @@ GameObject:
   - component: {fileID: 2138100738}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33305,6 +33307,10 @@ MonoBehaviour:
   state: 0
   searchRange: 7.18
   attackRange: 2
+  attackState: 0
+  attackClip: {fileID: 0}
+  delayTime: 0
+  attackTime: 0
   agent: {fileID: 0}
   anim: {fileID: 1815714834}
 --- !u!195 &2138100739

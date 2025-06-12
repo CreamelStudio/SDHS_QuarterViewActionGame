@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
 
     void EnemyAct()
     {
+        float dist;
         switch (state)
         {
             case EnemyState.Idle:
@@ -59,17 +60,27 @@ public class Enemy : MonoBehaviour
                 if(GameManager.instance.playerTrans != null)
                 {
                     agent.SetDestination(GameManager.instance.playerTrans.position);
-
-                    if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= attackRange)
+                    dist = Vector3.Distance(GameManager.instance.playerTrans.position, transform.position);
+                    
+                    if (dist <= searchRange)
+                    {
+                        if (dist <= attackRange)
+                        {
+                            agent.isStopped = true;
+                            ChangeState(EnemyState.Attack);
+                        }
+                    }
+                    else
                     {
                         agent.isStopped = true;
                         ChangeState(EnemyState.Attack);
+                        attackState = AttackState.Attack;
                     }
                 }
                 break;
             case EnemyState.Attack:
-                float dist = Vector3.Distance(transform.position, GameManager.instance.playerTrans.position);
-                if(dist > attackRange)
+                dist = Vector3.Distance(transform.position, GameManager.instance.playerTrans.position);
+                if (dist > attackRange)
                 {
                     agent.isStopped = false;
                     attackTime = 0;
@@ -77,6 +88,8 @@ public class Enemy : MonoBehaviour
                     attackState = AttackState.None;
                     ChangeState(EnemyState.Move);
                 }
+                
+                
                 
 	switch (attackState)
         {

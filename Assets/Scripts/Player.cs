@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     private NavMeshAgent navAgent;
     public Animator anim;
 
-    public float targetDistance;
+    private float targetDistance;
 
     [SerializeField]private Transform movePoint;
 
@@ -18,6 +18,14 @@ public class Player : MonoBehaviour
         Attack
     }
     public PlayerState playerState = PlayerState.Idle;
+    public float attackRange;
+    public float attackDist;
+    public Transform target;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,10 +50,24 @@ public class Player : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButton(0))
                 {
+                    if (hit.transform.CompareTag("Enemy")){
+                        target = hit.transform;
+                    }
                     AnimOn(PlayerState.Move);
                     movePoint.position = hit.point;
                     movePoint.gameObject.SetActive(true);
                     playerState = PlayerState.Move;
+
+                    if (target)
+                    {
+                        attackDist = Vector3.Distance(transform.position, target.position);
+
+                        if(attackDist < attackRange)
+                        {
+                            playerState = PlayerState.Attack;
+                            AnimOn(playerState);
+                        }
+                    }
                 }
 
                 break;
