@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.transform.CompareTag("Enemy")){
                         target = hit.transform;
+                        Debug.Log("Target is Detecting!");
                     }
                     AnimOn(PlayerState.Move);
                     movePoint.position = hit.point;
@@ -67,6 +68,11 @@ public class Player : MonoBehaviour
                             playerState = PlayerState.Attack;
                             AnimOn(playerState);
                         }
+                        else
+                        {
+                            playerState = PlayerState.Move;
+                            AnimOn(playerState); 
+                        }
                     }
                 }
 
@@ -75,11 +81,19 @@ public class Player : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButton(0))
                 {
-                    movePoint.position = hit.point;
-                    movePoint.gameObject.SetActive(true);
+                    if (hit.transform.CompareTag("Enemy"))
+                    {
+                        target = hit.transform;
+                        Debug.Log("Target is Detecting!");
+                    }
+                    else
+                    {
+                        movePoint.position = hit.point;
+                        movePoint.gameObject.SetActive(true);
+                    }
                 }
                 targetDistance = Vector3.Distance(movePoint.position, transform.position);
-                if(targetDistance <= 0.1f)
+                if(targetDistance <= 1.2f)
                 {
                     AnimOn(0);
                     playerState = PlayerState.Idle;
