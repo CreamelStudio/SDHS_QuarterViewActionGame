@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent agent;
     public Animator anim;
 
+    public ParticleSystem myParticleSystem;
+
     //씬 뷰에 기즈모를 그리는 함수
     private void OnDrawGizmos()
     {
@@ -98,11 +100,15 @@ public class Enemy : MonoBehaviour
                 delayTime += Time.deltaTime;
                 if (delayTime >= (attackClip.length * 0.4f))
                 {
+		    myParticleSystem.Stop();
+		    myParticleSystem.Play();
+		    Debug.Log("Tlqkf");
                     delayTime = 0;
                     attackTime = 0;
                     attackState = AttackState.Delay;
                     AnimSet(0);
                     attackState = AttackState.Delay;
+		    
 
                 }
                 break;
@@ -111,10 +117,14 @@ public class Enemy : MonoBehaviour
                 delayTime += Time.deltaTime;
                 if(delayTime >= (attackClip.length * 0.6f) * 2.0f)
                 {
+		    myParticleSystem.Stop();
+		    myParticleSystem.Play();
+		    Debug.Log("Tlqkf");
                     delayTime = 0;
                     attackTime = 0;
                     AnimSet(0);
                     attackState = AttackState.Attack;
+		   
                 }
                 break;
         }
