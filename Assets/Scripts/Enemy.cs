@@ -100,9 +100,9 @@ public class Enemy : MonoBehaviour
                 delayTime += Time.deltaTime;
                 if (delayTime >= (attackClip.length * 0.4f))
                 {
-		    myParticleSystem.Stop();
-		    myParticleSystem.Play();
-		    Debug.Log("Tlqkf");
+		            myParticleSystem.Stop();
+		            myParticleSystem.Play();
+		            Debug.Log("Tlqkf");
                     delayTime = 0;
                     attackTime = 0;
                     attackState = AttackState.Delay;
@@ -117,14 +117,10 @@ public class Enemy : MonoBehaviour
                 delayTime += Time.deltaTime;
                 if(delayTime >= (attackClip.length * 0.6f) * 2.0f)
                 {
-		    myParticleSystem.Stop();
-		    myParticleSystem.Play();
-		    Debug.Log("Tlqkf");
                     delayTime = 0;
                     attackTime = 0;
                     AnimSet(0);
                     attackState = AttackState.Attack;
-		   
                 }
                 break;
         }
