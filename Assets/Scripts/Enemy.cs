@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
                 if (Vector3.Distance(GameManager.instance.playerTrans.position, transform.position) <= searchRange)
                 {
                     ChangeState(EnemyState.Move);
+                    attackState = AttackState.None;
                 }
                 break;
             case EnemyState.Move:
@@ -70,6 +71,7 @@ public class Enemy : MonoBehaviour
                         {
                             agent.isStopped = true;
                             ChangeState(EnemyState.Attack);
+                            attackState = AttackState.Attack;
                         }
                     }
                     else
@@ -95,19 +97,17 @@ public class Enemy : MonoBehaviour
                 
 	switch (attackState)
         {
-
             case AttackState.Attack:
-                delayTime += Time.deltaTime;
-                if (delayTime >= (attackClip.length * 0.4f))
+                attackTime += Time.deltaTime;
+                if (attackTime >= (attackClip.length * 0.4f))
                 {
-		    myParticleSystem.Stop();
-		    myParticleSystem.Play();
-		    Debug.Log("Tlqkf");
+		            myParticleSystem.Stop();
+		            myParticleSystem.Play();
+                    GameManager.instance.playerTrans.GetComponent<Player>().Hit();
                     delayTime = 0;
                     attackTime = 0;
                     attackState = AttackState.Delay;
                     AnimSet(0);
-                    attackState = AttackState.Delay;
 		    
 
                 }
@@ -117,12 +117,9 @@ public class Enemy : MonoBehaviour
                 delayTime += Time.deltaTime;
                 if(delayTime >= (attackClip.length * 0.6f) * 2.0f)
                 {
-		    myParticleSystem.Stop();
-		    myParticleSystem.Play();
-		    Debug.Log("Tlqkf");
                     delayTime = 0;
                     attackTime = 0;
-                    AnimSet(0);
+                    AnimSet(2);
                     attackState = AttackState.Attack;
 		   
                 }

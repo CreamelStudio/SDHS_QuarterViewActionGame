@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
 
     private float targetDistance;
 
+    public int hp = 3;
+    public GameObject[] heart;
+    public GameObject gameOver;
+
     [SerializeField]private Transform movePoint;
 
     public enum PlayerState
@@ -32,6 +36,18 @@ public class Player : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         navAgent = GetComponent<NavMeshAgent>();
+    }
+
+    public void Hit()
+    {
+        hp--;
+        
+        if (hp <= 0)
+        {
+            gameOver.SetActive(true);
+            return;
+        }
+        heart[hp].SetActive(false);
     }
 
     // Update is called once per frame
