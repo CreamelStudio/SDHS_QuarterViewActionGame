@@ -10,23 +10,23 @@ public class Enemy : MonoBehaviour
         Idle, Move, Attack, Dead
     }
     public EnemyState state = EnemyState.Idle;
-    public float searchRange;
-    public float attackRange;
+    public float searchRange; //확인 범위
+    public float attackRange; //공격 범위
 
-    public enum AttackState
+    public enum AttackState //공격 스테이트
     {
         None, Attack, Delay
     }
     public AttackState attackState = AttackState.None;
     public AnimationClip attackClip;
 
-    public float delayTime;
-    public float attackTime;
+    public float delayTime; //공격 딜레이
+    public float attackTime; //공격 시간
 
     public NavMeshAgent agent;
     public Animator anim;
 
-    public ParticleSystem myParticleSystem;
+    public ParticleSystem myParticleSystem; //파티클
 
     //씬 뷰에 기즈모를 그리는 함수
     private void OnDrawGizmos()

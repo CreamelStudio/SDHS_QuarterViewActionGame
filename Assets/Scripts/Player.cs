@@ -3,14 +3,13 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    private CharacterController controller;
-    private NavMeshAgent navAgent;
-    public Animator anim;
+    private NavMeshAgent navAgent; //움직임을 위한 NavMesh
+    public Animator anim; 
 
-    private float targetDistance;
+    private float targetDistance; //타겟 거리 확인
 
     public int hp = 3;
-    public GameObject[] heart;
+    public GameObject[] heart; //하트 오브젝트
     public GameObject gameOver;
 
     [SerializeField]private Transform movePoint;
