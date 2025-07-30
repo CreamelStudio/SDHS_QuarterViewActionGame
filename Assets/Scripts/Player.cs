@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
+    public CharacterController controller;
     private NavMeshAgent navAgent; //움직임을 위한 NavMesh
     public Animator anim; 
 
